@@ -530,6 +530,31 @@ function cleanCache() {
 }
 setInterval(cleanCache, 10 * 60 * 1000);
 
+// GET /debug-ytdlp → test if yt-dlp works (diagnostic endpoint)
+app.get('/debug-ytdlp', async (req, res) => {
+  try {
+    const { stdout: version } = await exec('yt-dlp', ['--version'], { timeout: 5000 });
+    const { stdout } = await exec('yt-dlp', [
+      '--print', '%(title)s\n%(duration)s\n%(id)s',
+      '-f', 'bestaudio[ext=m4a]/bestaudio',
+      '--no-warnings', '--no-playlist', '--no-check-certificates',
+      '--socket-timeout', '8',
+      'ytsearch1:test audio',
+    ], { timeout: 15000 });
+    res.json({ 
+      ok: true, 
+      ytdlpVersion: version.trim(),
+      testResult: stdout.trim().split('\n'),
+    });
+  } catch (err) {
+    res.status(500).json({ 
+      ok: false, 
+      error: err.message,
+      stderr: err.stderr || null,
+    });
+  }
+});
+
 // GET /stream?q=artist+title  → returns audio URL
 app.get('/stream', async (req, res) => {
   const query = req.query.q;
@@ -557,9 +582,9 @@ app.get('/stream', async (req, res) => {
       '--no-warnings',
       '--no-playlist',
       '--no-check-certificates',
-      '--socket-timeout', '8',
+      '--socket-timeout', '15',
       `ytsearch1:${query}`,
-    ], { timeout: 12000 });
+    ], { timeout: 30000 });
 
     const lines = stdout.trim().split('\n');
     if (lines.length < 4 || !lines[0].startsWith('http')) {
