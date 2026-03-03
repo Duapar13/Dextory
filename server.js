@@ -579,6 +579,7 @@ app.get('/stream', async (req, res) => {
     res.json(data);
   } catch (err) {
     console.error(`[yt-dlp error]`, err.message);
+    if (err.stderr) console.error(`[yt-dlp stderr]`, err.stderr);
     res.status(500).json({ error: 'Failed to get audio stream' });
   }
 });
