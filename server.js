@@ -530,31 +530,20 @@ function cleanCache() {
 }
 setInterval(cleanCache, 10 * 60 * 1000);
 
-// ─── Cookies support for yt-dlp (YouTube bot detection bypass) ──
-const COOKIES_PATH = './cookies.txt';
-function ytdlpArgs(extra = []) {
-  const base = ['--no-warnings', '--no-playlist', '--no-check-certificates'];
-  if (existsSync(COOKIES_PATH)) {
-    base.push('--cookies', COOKIES_PATH);
-  }
-  return [...base, ...extra];
-}
-
 // GET /debug-ytdlp → test if yt-dlp works (diagnostic endpoint)
 app.get('/debug-ytdlp', async (req, res) => {
   try {
-    const hasCookies = existsSync(COOKIES_PATH);
     const { stdout: version } = await exec('yt-dlp', ['--version'], { timeout: 5000 });
-    const args = ytdlpArgs([
+    const { stdout } = await exec('yt-dlp', [
+      '--no-warnings', '--no-playlist', '--no-check-certificates',
       '--print', '%(title)s\n%(duration)s\n%(id)s',
+      '-f', 'bestaudio[ext=m4a]/bestaudio/best',
       '--socket-timeout', '10',
       'ytsearch1:test audio',
-    ]);
-    const { stdout } = await exec('yt-dlp', args, { timeout: 20000 });
+    ], { timeout: 20000 });
     res.json({ 
       ok: true, 
       ytdlpVersion: version.trim(),
-      hasCookies,
       testResult: stdout.trim().split('\n'),
     });
   } catch (err) {
@@ -562,7 +551,6 @@ app.get('/debug-ytdlp', async (req, res) => {
       ok: false, 
       error: err.message,
       stderr: err.stderr || null,
-      hasCookies: existsSync(COOKIES_PATH),
     });
   }
 });
@@ -588,12 +576,13 @@ app.get('/stream', async (req, res) => {
   try {
     console.log(`[yt-dlp] Searching: ${query}`);
     
-    const args = ytdlpArgs([
+    const { stdout } = await exec('yt-dlp', [
+      '--no-warnings', '--no-playlist', '--no-check-certificates',
       '--print', '%(urls)s\n%(title)s\n%(duration)s\n%(id)s',
+      '-f', 'bestaudio[ext=m4a]/bestaudio/best',
       '--socket-timeout', '15',
       `ytsearch1:${query}`,
-    ]);
-    const { stdout } = await exec('yt-dlp', args, { timeout: 30000 });
+    ], { timeout: 30000 });
 
     const lines = stdout.trim().split('\n');
     if (lines.length < 4 || !lines[0].startsWith('http')) {
