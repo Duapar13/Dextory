@@ -547,7 +547,6 @@ app.get('/debug-ytdlp', async (req, res) => {
     const { stdout: version } = await exec('yt-dlp', ['--version'], { timeout: 5000 });
     const args = ytdlpArgs([
       '--print', '%(title)s\n%(duration)s\n%(id)s',
-      '-f', 'ba/b',
       '--socket-timeout', '10',
       'ytsearch1:test audio',
     ]);
@@ -591,7 +590,6 @@ app.get('/stream', async (req, res) => {
     
     const args = ytdlpArgs([
       '--print', '%(urls)s\n%(title)s\n%(duration)s\n%(id)s',
-      '-f', 'ba/b',
       '--socket-timeout', '15',
       `ytsearch1:${query}`,
     ]);
