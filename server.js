@@ -643,7 +643,7 @@ app.get('/proxy-stream', async (req, res) => {
 });
 
 // ─── Deezer API proxy (for production) ─────────────────────────
-app.all('/api/deezer/*', async (req, res) => {
+app.all('/api/deezer/*path', async (req, res) => {
   try {
     const deezerPath = req.path.replace(/^\/api\/deezer/, '');
     const url = `https://api.deezer.com${deezerPath}${req.url.includes('?') ? '?' + req.url.split('?')[1] : ''}`;
@@ -665,7 +665,7 @@ const distPath = path.join(__dirname, 'dist');
 
 if (existsSync(distPath)) {
   app.use(express.static(distPath));
-  app.get('*', (req, res) => {
+  app.get('*path', (req, res) => {
     if (!req.path.startsWith('/auth') && !req.path.startsWith('/library') &&
         !req.path.startsWith('/history') && !req.path.startsWith('/playlists') &&
         !req.path.startsWith('/friends') && !req.path.startsWith('/users') &&
