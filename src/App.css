@@ -1,0 +1,302 @@
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1e1e1e;
+  --bg-hover: #282828;
+  --text-primary: #fff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #666;
+  --accent: #e91e63;
+  --accent-light: #f06292;
+  --accent-dark: #c2185b;
+  --border: rgba(255,255,255,0.06);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --transition: 200ms ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100dvh;
+}
+
+#root { height: 100dvh; }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ========== HEADER ========== */
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.app__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.app__title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ========== NAV ========== */
+.app__nav {
+  display: flex;
+  gap: 4px;
+}
+
+.app__nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.app__nav-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.app__nav-btn--active {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.app__nav-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  overflow: hidden;
+}
+
+.app__nav-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.app__nav-badge {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  color: #fff;
+}
+
+/* ========== MAIN ========== */
+.app__main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+}
+
+.app__main--with-player {
+  padding-bottom: 100px;
+}
+
+.app__main::-webkit-scrollbar { width: 6px; }
+.app__main::-webkit-scrollbar-track { background: transparent; }
+.app__main::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+/* ========== MODAL ========== */
+.app__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 200ms ease;
+}
+
+.app__modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  width: 380px;
+  max-width: 90vw;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideIn 300ms ease;
+}
+
+.app__modal h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.app__modal-track {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app__modal-empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 24px 0;
+}
+
+.app__modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  max-height: 300px;
+  margin-bottom: 16px;
+}
+
+.app__modal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.app__modal-item:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+}
+
+.app__modal-item span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.app__modal-close {
+  padding: 10px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.app__modal-close:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+  from { transform: translateY(20px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .app__header { padding: 0 14px; height: 52px; }
+  .app__title { font-size: 16px; }
+  .app__nav-btn { padding: 7px 10px; font-size: 12px; }
+  .app__modal { width: 90vw; }
+}
+
+@media (max-width: 640px) {
+  .app__header { padding: 0 10px; height: 48px; }
+  .app__title { font-size: 15px; }
+  .app__logo svg { width: 22px; height: 22px; }
+  .app__logo { gap: 6px; }
+  .app__nav { gap: 2px; }
+  .app__nav-btn span { display: none; }
+  .app__nav-btn { padding: 8px; }
+  .app__nav-avatar { width: 22px; height: 22px; font-size: 10px; }
+  .app__modal {
+    width: 95vw;
+    padding: 20px 16px;
+    border-radius: var(--radius);
+    max-height: 80vh;
+  }
+  .app__modal h3 { font-size: 16px; }
+  .app__modal-track { font-size: 12px; }
+  .app__modal-item { padding: 10px 12px; font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .app__header { height: 44px; padding: 0 8px; }
+  .app__title { font-size: 14px; }
+  .app__main--with-player { padding-bottom: 72px; }
+}
+
+@media (max-width: 360px) {
+  .app__header { height: 42px; }
+  .app__title { font-size: 13px; }
+}

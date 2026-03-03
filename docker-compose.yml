@@ -1,0 +1,20 @@
+services:
+  dextory:
+    build: .
+    container_name: dextory
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - dextory-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/auth/me"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  dextory-data:

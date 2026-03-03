@@ -1,0 +1,970 @@
+.account {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== Profile Bar ===== */
+.account__profile-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.account__avatar-mini {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #ff6b9d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.account__avatar-mini:hover { transform: scale(1.05); }
+
+.account__avatar-mini span {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+}
+
+.account__avatar-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account__avatar-mini-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.account__avatar-mini:hover .account__avatar-mini-overlay { opacity: 1; }
+
+.account__avatar-mini-loading {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.account__profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.account__name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.account__name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account__edit-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.account__edit-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.account__edit-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.account__edit-input {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  width: 160px;
+  outline: none;
+}
+
+.account__edit-input:focus { border-color: var(--accent); }
+
+.account__edit-save {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account__edit-cancel {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.account__username {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.account__logout-btn {
+  background: none;
+  border: 1px solid rgba(244, 67, 54, 0.25);
+  color: #ef5350;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.account__logout-btn:hover {
+  background: rgba(244, 67, 54, 0.1);
+  border-color: rgba(244, 67, 54, 0.5);
+}
+
+/* ===== Tabs ===== */
+.account__tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.account__tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.account__tab:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+
+.account__tab--active {
+  color: var(--text-primary);
+  background: rgba(233, 30, 99, 0.15);
+  border: 1px solid rgba(233, 30, 99, 0.3);
+}
+
+.account__tab--active:hover { background: rgba(233, 30, 99, 0.2); color: var(--text-primary); }
+
+.account__tab svg { flex-shrink: 0; }
+
+.account__tab-badge {
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Library Sub-tabs ===== */
+.account__subtabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.account__subtab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.account__subtab:hover { border-color: var(--text-muted); color: var(--text-primary); }
+
+.account__subtab--active {
+  background: rgba(233, 30, 99, 0.12);
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.account__subtab-count {
+  font-size: 11px;
+  background: var(--bg-tertiary);
+  padding: 1px 6px;
+  border-radius: 8px;
+  color: var(--text-muted);
+}
+
+.account__subtab--active .account__subtab-count {
+  background: rgba(233, 30, 99, 0.2);
+  color: var(--text-primary);
+}
+
+/* ===== Library content ===== */
+.account__lib-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: accountFadeIn 0.2s ease-out;
+}
+
+@keyframes accountFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.account__lib-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  text-align: center;
+  gap: 10px;
+}
+
+.account__lib-empty p {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.account__lib-empty span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.account__lib-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===== Create playlist ===== */
+.account__create-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.account__create-btn:hover { background: var(--accent-hover); }
+
+.account__new-playlist {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.account__new-playlist-input {
+  flex: 1;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+}
+
+.account__new-playlist-input:focus { border-color: var(--accent); }
+
+.account__new-playlist-ok {
+  background: var(--accent);
+  color: white;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account__new-playlist-cancel {
+  background: none;
+  color: var(--text-muted);
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ===== Playlist cards ===== */
+.account__playlists-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account__pl-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.account__pl-card:hover { background: var(--bg-tertiary); }
+
+.account__pl-card-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.account__pl-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account__pl-card-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.account__pl-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account__pl-card-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.account__pl-collab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.account__pl-badge {
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 3px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.account__pl-delete {
+  background: none;
+  color: var(--text-muted);
+  padding: 6px;
+  border-radius: 50%;
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.account__pl-delete:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+/* ===== Back button ===== */
+.account__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.account__back-btn:hover { color: var(--text-primary); }
+
+/* ===== Playlist detail header ===== */
+.account__pl-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.account__pl-detail-cover {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.account__pl-detail-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account__pl-detail-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.account__pl-detail-info h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account__pl-detail-info span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.account__pl-detail-owner {
+  display: block;
+  margin-top: 2px;
+}
+
+.account__pl-share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.account__pl-share-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.account__pl-share-btn--active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* ===== Collab panel ===== */
+.account__collab-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: accountFadeIn 0.2s ease-out;
+}
+
+.account__collab-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.account__collab-title svg { color: var(--accent); }
+
+.account__collab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account__collab-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+}
+
+.account__collab-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #ff6b9d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.account__collab-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account__collab-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.account__collab-remove {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.account__collab-remove:hover {
+  border-color: #ef5350;
+  color: #ef5350;
+}
+
+.account__collab-add {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account__collab-add-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.account__collab-friends {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.account__collab-friend-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.account__collab-friend-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.account__collab-friend-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #ff6b9d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.account__collab-friend-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account__collab-none {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ===== Friends ===== */
+.account__friends {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account__friend-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  position: relative;
+}
+
+.account__friend-search svg { flex-shrink: 0; }
+
+.account__friend-search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+}
+
+.account__friend-search-spin {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.account__friend-msg {
+  font-size: 13px;
+  color: var(--accent);
+  text-align: center;
+  padding: 8px 12px;
+  background: var(--accent-light);
+  border-radius: var(--radius-sm);
+}
+
+.account__friend-results,
+.account__friend-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.account__friend-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.account__friend-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.account__friend-card + .account__friend-card {
+  border-top: 1px solid var(--border);
+}
+
+.account__friend-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #ff6b9d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.account__friend-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account__friend-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.account__friend-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.account__friend-username {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.account__friend-status {
+  font-size: 12px;
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.account__friend-add {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.account__friend-add:hover { opacity: 0.85; }
+
+.account__friend-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.account__friend-accept {
+  background: #4caf50;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.account__friend-accept:hover { opacity: 0.85; }
+
+.account__friend-decline {
+  background: rgba(244, 67, 54, 0.15);
+  color: #ef5350;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.account__friend-decline:hover { background: rgba(244, 67, 54, 0.25); }
+
+.account__friend-remove {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.account__friend-remove:hover {
+  border-color: #ef5350;
+  color: #ef5350;
+}
+
+.account__friend-empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 16px 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .account { padding: 20px 12px; gap: 14px; }
+  .account__profile-bar { padding: 14px 16px; }
+  .account__tabs { gap: 0; }
+  .account__tab { padding: 10px 14px; font-size: 13px; }
+  .account__subtab { padding: 6px 12px; font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .account { padding: 16px 8px; gap: 12px; }
+  .account__profile-bar {
+    padding: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .account__avatar-mini {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+  .account__name { font-size: 16px; }
+  .account__username { font-size: 12px; }
+  .account__tabs { border-radius: 10px; }
+  .account__tab { padding: 9px 10px; font-size: 12px; gap: 4px; }
+  .account__tab svg { width: 14px; height: 14px; }
+  .account__subtabs { gap: 4px; }
+  .account__subtab {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  .account__pl-grid { grid-template-columns: 1fr; gap: 6px; }
+  .account__pl-card { padding: 10px; gap: 8px; }
+  .account__pl-card-cover { width: 44px; height: 44px; }
+  .account__pl-card-name { font-size: 13px; }
+  .account__pl-detail-header {
+    padding: 10px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .account__pl-detail-cover { width: 60px; height: 60px; }
+  .account__pl-detail-info { width: 100%; }
+  .account__pl-detail-actions { width: 100%; justify-content: flex-start; }
+  .account__collab-section { padding: 10px; }
+  .account__friend-item { padding: 8px 10px; }
+  .account__friend-avatar { width: 32px; height: 32px; font-size: 12px; }
+  .account__friend-name { font-size: 13px; }
+  .account__section-title { font-size: 14px; }
+  .account__pl-new-input { font-size: 13px; padding: 8px 10px; }
+  .account__pl-new-btn { padding: 8px 12px; font-size: 12px; }
+}
+
+@media (max-width: 360px) {
+  .account { padding: 12px 6px; }
+  .account__profile-bar { padding: 10px; }
+  .account__name { font-size: 15px; }
+  .account__tab { padding: 8px; font-size: 11px; }
+  .account__subtab { padding: 4px 8px; font-size: 10px; }
+}
