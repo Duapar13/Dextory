@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 
 const exec = promisify(execFile);
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 8020;
 const JWT_SECRET = 'dextory_secret_key_2026';
 const DB_PATH = './db.json';
 

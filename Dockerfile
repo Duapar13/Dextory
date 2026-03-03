@@ -31,10 +31,10 @@ COPY --from=builder /app/dist ./dist
 RUN echo '{"users":[],"libraries":{},"history":{},"playlists":{},"friends":{},"friendRequests":{}}' > db.json
 
 # Expose port
-EXPOSE 3001
+EXPOSE 8020
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3001/auth/me || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://localhost:8020/auth/me || exit 1
 
 CMD ["node", "server.js"]

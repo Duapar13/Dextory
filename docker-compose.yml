@@ -4,14 +4,14 @@ services:
     container_name: dextory
     restart: unless-stopped
     ports:
-      - "3001:3001"
+      - "8020:8020"
     volumes:
       - dextory-data:/app/data
     environment:
       - NODE_ENV=production
-      - PORT=3001
+      - PORT=8020
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/auth/me"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8020/auth/me"]
       interval: 30s
       timeout: 5s
       retries: 3
